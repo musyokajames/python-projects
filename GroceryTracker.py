@@ -7,9 +7,7 @@ while True:
     item_to_add = input("Add an item to your list(or type N to stop): ")
     if item_to_add.upper() == "N":
         break
-      
-    # items = item_to_add.split(",")
-    # added_item_string += item_to_add + ", "
+
     grocery_list.append(item_to_add)
 
     print(grocery_list)
