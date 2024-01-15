@@ -34,7 +34,7 @@ for item in removed_items_list:
         print(f"{item} is not in your list.")
 
 #display the new updated list where items have been removed
-updated_grocery_list = print(grocery_list)
+print("Updated Grocery List:",grocery_list)
 
 
 #I should  display the list as a numbered list from top to bottom and not in []
