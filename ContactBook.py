@@ -31,42 +31,66 @@ def display_contacts(contacts):
 
 display_contacts(contact_book)
 
-#Search the contacts
-def search_contact(contact_book):
-    searched_contact = input("Search by name, email, or phone number:").lower()
-    found_contacts = []
+# #Search the contacts
+# def search_contact(contact_book):
+#     searched_contact = input("Search by name, email, or phone number:").lower()
+#     found_contacts = []
 
-    for contact in contact_book:
-        for key,value in contact.items():
-            if searched_contact in value.lower():
-                found_contacts.append(contact)
+#     for contact in contact_book:
+#         for key,value in contact.items():
+#             if searched_contact in value.lower():
+#                 found_contacts.append(contact)
 
-    if found_contacts:
-        print("Found Contacts")
-        for found_contact in found_contacts:
-            print("----------")
-            for key,value in found_contact.items():
-                print(f"{key}:{value}")
-            print("----------")
-    else:
-        print(f"Sorry, '{searched_contact}' is not in your contacts")
+#     if found_contacts:
+#         print("Found Contacts")
+#         for found_contact in found_contacts:
+#             print("----------")
+#             for key,value in found_contact.items():
+#                 print(f"{key}:{value}")
+#             print("----------")
+#     else:
+#         print(f"Sorry, '{searched_contact}' is not in your contacts")
 
-search_contact(contact_book)
+# search_contact(contact_book)
 
 #Edit Contact
 def edit_contact(contact_book):
     print("Edit Contact")
     contact_to_edit = input("Name, phone number or email:").lower()
-    edited_contacts = []
+
 
     for contact in contact_book:
         for key,value in contact.items():
             if contact_to_edit in value.lower():
-                edited_contacts.append(contact)
+                print(f"Current Contact Details:\n{contact}")
+               
+               
+                prompt = '''
+                1)Edit name
+                2)Edit Phone Number
+                3)Edit Email
+                '''
+                print(prompt)
+                user_choice=int(input("Enter your choice(1,2 or 3):"))
+                if user_choice == 1:
+                    new_name=input("Enter new name:")
+                    contact["Name"] = new_name
+                elif user_choice == 2:
+                    new_phoneNo = input("Enter new phone number:")
+                    contact["Phone Number"] = new_phoneNo
+                elif user_choice == 3:
+                    new_email = input("Enter new email:")
+                    contact["Email"] = new_email
+                else:
+                    print("Invalid Input")
+                
+                print(f"Updated Contact Details:\n{contact}")
+
+                return [contact]
+               
     
-    return edited_contacts
+    print(f"Contact with '{contact_to_edit}' not found.")
+    return []
 
-
-edited_contacts_result = edit_contact(contact_book)
-
-print(edited_contacts_result)
+# edited_contacts_result = edit_contact(contact_book)
+# print(edited_contacts_result)
