@@ -8,17 +8,15 @@ contact_book = [
     },
 ]
 
+
 #Add a new contact
-print("Add new contact.")
 def get_contact_info():
+    print("Add new contact.")
     name = input("Name:")
     phone_no = input("Phone Number:")
     email = input("Email:")
     return{"Name":name,"Phone Number":phone_no,"Email":email}
 
-contact_info = get_contact_info()
-contact_book.append(contact_info)
-print(contact_book)
 
 #Display the contacts
 def display_contacts(contacts):
@@ -29,41 +27,42 @@ def display_contacts(contacts):
             print(f"{key}:{value}")
     print("----------")
 
-display_contacts(contact_book)
 
-# #Search the contacts
-# def search_contact(contact_book):
-#     searched_contact = input("Search by name, email, or phone number:").lower()
-#     found_contacts = []
+#Search the contacts
+def search_contact(contact_book):
+    searched_contact = input("Search by name, email, or phone number:").lower()
+    found_contacts = set()
 
-#     for contact in contact_book:
-#         for key,value in contact.items():
-#             if searched_contact in value.lower():
-#                 found_contacts.append(contact)
+    for contact in contact_book:
+        for key,value in contact.items():
+            if searched_contact in value.lower():
+                found_contacts.add(tuple(contact.items()))
 
-#     if found_contacts:
-#         print("Found Contacts")
-#         for found_contact in found_contacts:
-#             print("----------")
-#             for key,value in found_contact.items():
-#                 print(f"{key}:{value}")
-#             print("----------")
-#     else:
-#         print(f"Sorry, '{searched_contact}' is not in your contacts")
+    if found_contacts:
+        print("Found Contacts")
+        for found_contact in found_contacts:
+            print("----------")
+            for key,value in dict(found_contact).items():
+                print(f"{key}:{value}")
+            print("----------")
+    else:
+        print(f"Sorry, '{searched_contact}' is not in your contacts")
 
-# search_contact(contact_book)
 
 #Edit Contact
 def edit_contact(contact_book):
     print("Edit Contact")
     contact_to_edit = input("Name, phone number or email:").lower()
 
-
     for contact in contact_book:
         for key,value in contact.items():
             if contact_to_edit in value.lower():
-                print(f"Current Contact Details:\n{contact}")
-               
+                print(f"Current Contact Details:")
+                print("----------")
+                print(f"Name: {contact['Name']}")
+                print(f"Phone Number: {contact['Phone Number']}")
+                print(f"Email: {contact['Email']}")
+                print("----------")
                
                 prompt = '''
                 1)Edit name
@@ -84,13 +83,67 @@ def edit_contact(contact_book):
                 else:
                     print("Invalid Input")
                 
-                print(f"Updated Contact Details:\n{contact}")
-
+                print(f"Updated Contact Details:")
+                print("----------")
+                print(f"Name: {contact['Name']}")
+                print(f"Phone Number: {contact['Phone Number']}")
+                print(f"Email: {contact['Email']}")
+                print("----------")
                 return [contact]
                
     
     print(f"Contact with '{contact_to_edit}' not found.")
     return []
 
-# edited_contacts_result = edit_contact(contact_book)
-# print(edited_contacts_result)
+#Delete Contact
+def delete_contact(contact):
+    contact_to_delete = input("Enter Contact to delete(name, phone number or email):").lower()
+
+    for contact in contact_book:
+        for key, value in contact.items():
+            if contact_to_delete in value.lower():
+                contact_book.remove(contact)
+                print(f"Successfully deleted '{value}'")
+                display_contacts(contact_book)
+                return
+
+    print(f"Contact with '{contact_to_delete}' not found.")
+    print("Remaining contacts:")
+    display_contacts(contact_book)
+
+while True:
+    action = int(input('''
+        Enter Option.
+        1)Add Contact(s)
+        2)Display the Contacts
+        3)Search Contact(s)
+        4)Edit Contact(s)
+        5)Delete contact(s)
+        6)Exit
+        ----->
+        '''))
+
+    if action == 1:
+        contact_info = get_contact_info()
+        contact_book.append(contact_info)
+        print("Contact added successfully.")
+        display_contacts(contact_book)
+        
+    elif action == 2:
+        display_contacts(contact_book)
+
+    elif action == 3:
+        search_contact(contact_book)
+
+    elif action == 4:
+        edit_contact(contact_book)
+
+    elif action == 5:
+        delete_contact(contact_book)
+
+    elif action == 6:
+        print("Exiting...Goodbye:)")
+        break
+    else:
+        print("Invalid choice")
+   
