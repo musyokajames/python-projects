@@ -1,5 +1,6 @@
 #Contact Book
 #initialize a list to store your contacts, every contact is stored as a dictionary
+import json
 contact_book = [
     {
       "Name":"John Doe",
@@ -111,6 +112,26 @@ def delete_contact(contact):
     print("Remaining contacts:")
     display_contacts(contact_book)
 
+#Saving the contact to a file
+def save_contacts_to_file(contacts ,filename = "contact_book.json"):
+    try:
+        with open(filename, "w") as file:
+            json.dump(contacts, file, indent=2)
+        print(f"Contacts succesfully saved to {filename}")
+    except Exception as e:
+        print(f"Error: Unable to save contact to {filename}.Reason:{e}")
+
+# Function to load contacts from a file
+def load_contacts_from_file(filename="contact_book.json"):
+    try:
+        with open(filename, "r") as file:
+            return json.load(file)
+    except FileNotFoundError:
+        return []
+
+#Load contacts at program start
+contact_book = load_contacts_from_file()
+
 while True:
     action = int(input('''
         Enter Option.
@@ -143,7 +164,10 @@ while True:
 
     elif action == 6:
         print("Exiting...Goodbye:)")
+        save_contacts_to_file(contact_book)
         break
     else:
         print("Invalid choice")
    
+
+
