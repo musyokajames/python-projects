@@ -9,7 +9,7 @@ class NotesOrganizer:
             'IDEAS' : [],
             'TO-DO_LIST' : [],
             'RANDOM_THOUGHTS' : [],
-            'UNCATEGORIZED' : []
+            'UNCATEGORIZED': []
         }
             
             
@@ -17,24 +17,34 @@ class NotesOrganizer:
     def add_notes(self,title,content,category):
         notes = Notes(title,content,category)
         self.notes.append(notes)
-        if category in self.categories:
-            self.categories[category].append(notes)
-            
-        else:
-            self.categories['UNCATEGORIZED'].append(notes)
-
         return notes
        
-        
+
+    def edit_notes(self,title,content,new_title,new_content,category,new_category):
+        for categories,notes_list in self.categories.items():
+            if categories == category:
+                for note in notes_list:
+                    if note.title == title and note.content == content:
+                        note.title = new_title
+                        note.content = new_content
+
+                        if new_category != category:
+                            notes_list.remove(note)
+
+                            if new_category in self.categories:
+                                self.categories[new_category].append(note)
+                            else:
+                                self.categories['UNCATEGORIZED'].append(note)
+                        return
+                    print("Note not found or invalid category")
 
     def view_notes(self):
         for categories,notes_list in self.categories.items():
             print(f"{categories}")
             for note in notes_list:
                 print(note)
-
-    def edit_notes(self,title,content,new_title,new_content,category,new_category):
-        pass
+                    
+                
 
             
             
@@ -87,8 +97,9 @@ def main():
             elif category == '4':
                 system.categories['RANDOM_THOUGHTS'].append(notes)
                 
-            elif category == '5':
-               pass
+            elif category not in system.categories:
+                system.categories['UNCATEGORIZED'].append(notes)
+               
             else:
                 print("Invalid Category!Try Again:)")
 
@@ -96,7 +107,18 @@ def main():
             system.view_notes()
 
         elif choice == '3':
-            pass
+            category = input("Enter Category note is in:")
+            new_category = input("Move note to which category(skip if you dont want to change this):")
+            title = input("Enter Title of note to edit:")
+            new_title = input("Input updated title:")
+            content = input("Enter content(s) of note to edit:")
+            new_content = input("Input updated content:")
+
+            if not new_category:
+                new_category=category
+            system.edit_notes(category,new_category,title,new_title,content,new_content)
+            system.view_notes()
+
         elif choice == '4':
             pass
         elif choice == '5':
