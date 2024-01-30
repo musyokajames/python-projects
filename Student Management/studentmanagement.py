@@ -7,7 +7,7 @@ class StudentManagementSystem:
     def add_students(self,name,age,grade):
         student = Student(name,age,grade)
         self.students.append(student)
-        print(f"Student {name} added succesfully!")
+        print(f"Student {name} added successfully!")
 
     def display_students(self):
         for student in self.students:
@@ -21,9 +21,9 @@ class StudentManagementSystem:
 
     def delete_students(self,name):
         for student in self.students:
-            if student.name == name:
+            if name == student.name:
                 self.students.remove(student)
-                print(f"Succesfully deleted Student {name}")
+                print(f"Successfully deleted Student {name}")
 
 def main():
     system = StudentManagementSystem()
@@ -50,7 +50,7 @@ def main():
         elif choice == '3':
             name = input("Enter student name to update grade: ")
             new_grade = input("Enter new grade: ")
-            system.update_student_grade(name,new_grade)
+            system.upgrade_student_grade(name,new_grade)
         
         elif choice == '4':
             name = input("Enter student name to delete: ")
