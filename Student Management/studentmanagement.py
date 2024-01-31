@@ -25,8 +25,35 @@ class StudentManagementSystem:
                 self.students.remove(student)
                 print(f"Successfully deleted Student {name}")
 
+def save_students_to_file(students,filename = "student_data.txt"):
+        try:
+            with open (filename ,"w") as file:
+                for student in students:
+                    file.write(student.__str__())
+                print(f"Student successfully added to {filename}")
+        except Exception as e:
+            print(f"Unable to save contact to {filename}.Reason:{e}")
+
+
+def load_students_from_file(filename="student_data.txt"):
+    students = []
+    try:
+        with open(filename, "r") as file:
+            for line in file:
+                name, age, grade = line.strip().split(",")
+                student = Student(name, age, grade)
+                students.append(student)
+        print(f"Student data successfully loaded from {filename}")
+    except FileNotFoundError:
+        print(f"File {filename} not found. Starting with an empty list.")
+    except Exception as e:
+        print(f"Unable to load student data from {filename}. Reason: {e}")
+    return students
+            
+
 def main():
     system = StudentManagementSystem()
+    system.students = load_students_from_file()
 
     while True:
         print("\n Student Management System")
@@ -58,10 +85,13 @@ def main():
         
         elif choice == '5':
             print("Exiting...")
+            save_students_to_file(system.students)
             break
 
         else:
             print("Invalid choice.Please try again")
+
+            
 
 if __name__ == "__main__":
     main()

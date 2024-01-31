@@ -5,4 +5,5 @@ class Student:
         self.grade = grade
 
     def __str__(self):
-        return f"Name:{self.name},Age:{self.age},Grade:{self.grade}"
+        return f"Name:{self.name},Age:{self.age},Grade:{self.grade}\n"
+    
