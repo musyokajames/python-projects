@@ -10,6 +10,7 @@ class StudentManagementSystem:
         print(f"Student {name} added successfully!")
 
     def display_students(self):
+        print("Name:Age:Grade")
         for student in self.students:
             print(student)
         
@@ -40,7 +41,7 @@ def load_students_from_file(filename="student_data.txt"):
     try:
         with open(filename, "r") as file:
             for line in file:
-                name, age, grade = line.strip().split(",")
+                name, age, grade = line.strip().split(":")
                 student = Student(name, age, grade)
                 students.append(student)
         print(f"Student data successfully loaded from {filename}")
@@ -66,21 +67,21 @@ def main():
         choice = input("Enter your choice:")
 
         if choice == '1':
-            name = input("Enter name: ")
+            name = input("Enter name: ").upper()
             age = input("Enter age: ")
-            grade = input("Enter grade: ")
+            grade = input("Enter grade: ").upper()
             system.add_students(name,age,grade)
         
         elif choice == '2':
             system.display_students()
 
         elif choice == '3':
-            name = input("Enter student name to update grade: ")
-            new_grade = input("Enter new grade: ")
+            name = input("Enter student name to update grade: ").upper()
+            new_grade = input("Enter new grade: ").upper()
             system.upgrade_student_grade(name,new_grade)
         
         elif choice == '4':
-            name = input("Enter student name to delete: ")
+            name = input("Enter student name to delete: ").upper()
             system.delete_students(name)
         
         elif choice == '5':
